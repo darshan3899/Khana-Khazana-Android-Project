@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "432340956130",
+    "firebase_url": "https://khana-khazana-3c11a.firebaseio.com",
+    "project_id": "khana-khazana-3c11a",
+    "storage_bucket": "khana-khazana-3c11a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:432340956130:android:8fb67d3f95a2a1ad3cffbb",
+        "android_client_info": {
+          "package_name": "com.example.khanakhazana"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "432340956130-e02pvc9mhp2uef81avfglbo41043qpln.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAG6Urgdj8_QT9Sr34-zoVR9tDl2cfx8-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "432340956130-e02pvc9mhp2uef81avfglbo41043qpln.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

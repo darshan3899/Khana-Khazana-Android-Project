@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Khana Khazana</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="not_registered_sign_up">Not Registered?Sign Up!</string>
+    <string name="login">LogIn</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_phone_number">Enter Phone Number</string>
+    <string name="title_activity_intro">Intro</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="special_s">SPECIAL\'S</string>
+    <string name="khandvi">KHANDVI</string>
+    <string name="gulab_jamun">GULAB JAMUN</string>
+    <string name="pav_bhaji">PAV BHAJI</string>
+    <string name="biryani">BIRYANI</string>
+    <string name="panna_cotta">PANNA COTTA</string>
+</resources>
