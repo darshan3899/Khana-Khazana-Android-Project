@@ -1,9 +1,13 @@
 package com.example.khanakhazana;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -11,7 +15,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Cusines extends AppCompatActivity {
     FirebaseAuth mFirebaseAuth;
-    Button btnIndian,btnItalian, btnJapanese , btnChinese,btnThai ,btnMexican ,btnLogout;
+    Button btnIndian,btnItalian, btnJapanese , btnChinese,btnThai ,btnMexican;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +27,6 @@ public class Cusines extends AppCompatActivity {
         btnItalian = findViewById(R.id.btnItalian);
         btnMexican = findViewById(R.id.btnMexican);
         btnThai = findViewById(R.id.btnThai);
-        btnLogout=findViewById(R.id.btnLogout);
 
         btnIndian.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,12 +65,23 @@ public class Cusines extends AppCompatActivity {
             }
         });
 
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.main,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId())
+        {
+            case R.id.menu_logout:
+                mFirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(Cusines.this,MainActivity.class));
-            }
-        });
+                return true;
+        }
+        return true;
     }
 }
