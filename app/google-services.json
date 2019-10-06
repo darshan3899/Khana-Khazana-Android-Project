@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "432340956130-34qg7ckh0g5m73f6uumce2v312iha4mp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.khanakhazana",
+            "certificate_hash": "321b0c8866ab2706180afbdbad90d861734088c1"
+          }
+        },
+        {
           "client_id": "432340956130-e02pvc9mhp2uef81avfglbo41043qpln.apps.googleusercontent.com",
           "client_type": 3
         }

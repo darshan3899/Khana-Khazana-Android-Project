@@ -4,30 +4,72 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.Locale;
+
 public class Recipies extends AppCompatActivity {
-    ImageView ivImg;
+
+    TextToSpeech TtS;
+    ImageView ivImg,ivAudio;
+    Button btnSubmit;
     TextView tvName,tvRep;
     String rep;
+    int noOfStars;
+    RatingBar rbRating;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipies);
 
         ivImg=findViewById(R.id.ivImg);
+        btnSubmit=findViewById(R.id.btnSubmit);
         tvName=findViewById(R.id.tvName);
         tvRep=findViewById(R.id.tvRep);
+        rbRating=findViewById(R.id.rbRating);
+        ivAudio=findViewById(R.id.ivAudio);
+
 
         Intent intent=getIntent();
-        String text=intent.getStringExtra(IndianRecipes.EXTRA_TEXT);
+        final String text=intent.getStringExtra(IndianRecipes.EXTRA_TEXT);
+
+        TtS=new TextToSpeech(Recipies.this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i==TextToSpeech.SUCCESS)
+                {
+                    int result=TtS.setLanguage(Locale.ENGLISH);
+                    if(result==TextToSpeech.LANG_MISSING_DATA || result==TextToSpeech.LANG_NOT_SUPPORTED)
+                    {
+                        Log.e("TtS","Language not Supported");
+                    }
+                    else
+                    {
+                        ivAudio.setEnabled(true);
+                    }
+                }
+                else
+                {
+                    Log.e("TtS","Inizialization Failed!");
+                }
+            }
+        });
 
         if(text.equals("khandvi"))
         {
             tvName.setText("KHANDVI");
             ivImg.setImageResource(R.drawable.indian_khandvi);
-            rep="INGREDIENTS\n" +
+            rep=
+                    "INGREDIENTS\n" +
                     "1.Gram flour 1 1/4 cups\n" +
                     "2.Yogurt 1 cup\n" +
                     "3.Ginger 1 inch\n" +
@@ -50,6 +92,12 @@ public class Recipies extends AppCompatActivity {
                     "5.When cool, cut into strips two inches wide and roll them tightly. Heat two tablespoons of oil and add a pinch of asafoetida and mustard seeds\n" +
                     "6.When they splutter, pour over the pieces. Serve garnished with scraped";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
         else if(text.equals("gulab_jamun"))
         {
@@ -71,6 +119,12 @@ public class Recipies extends AppCompatActivity {
                     "3.Fill a large heavy skillet halfway with oil. Heat over medium heat for at least 5 minutes. Knead the dough, and form into about 20 small balls. Reduce the heat of the oil to low, and fry the balls in one or two batches. After about 5 minutes, they will start to float, and expand to twice their original size, but the color will not change much. After the jamun float, increase the heat to medium, and turn them frequently until light golden. Remove from the oil to paper towels using a slotted spoon, and allow to cool. Drain on paper towels and allow to cool slightly.\n" +
                     "4.Place the balls into the skillet with the syrup. Simmer over medium heat for about 5 minutes, squeezing them gently to soak up the syrup. Serve immediately, or chill.";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
         else if(text.equals("pav_bhaji"))
         {
@@ -101,6 +155,12 @@ public class Recipies extends AppCompatActivity {
                     "3.Mash the vegetables till they are little pulpy.\n" +
                     "4.Add lemon juice and serve with toasted buns or Pav.";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
         else if(text.equals("biryani"))
         {
@@ -138,6 +198,12 @@ public class Recipies extends AppCompatActivity {
                     "10.Reduce flame and cook for 40 min.\n" +
                     "11.Finally, add lime juice mixed with turmeric powder through small holes made in the rice.\n";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("baozi"))
@@ -171,6 +237,12 @@ public class Recipies extends AppCompatActivity {
                     "4.In the meantime, making the filling. Place the cellophane noodles in a heatproof bowl and add enough boiling water to submerge the noodles completely. Drain the noodles after two minutes, they should be soft but not mushy. Once cooled, roughly cut the noodles into 1 inch segments." +
                     "";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("fried_rice"))
@@ -200,6 +272,12 @@ public class Recipies extends AppCompatActivity {
                     "4.Stir in the vinegar and cook for one minute, stirring continuously.\n" +
                     "5.Garnish with remaining spring onion greens and serve hot.";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
 
@@ -229,6 +307,12 @@ public class Recipies extends AppCompatActivity {
                     "8.Dry on kitchen paper.\n" +
                     "9.If desired serve the spring rolls with soy sauce.";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("turnip_cake"))
@@ -256,6 +340,12 @@ public class Recipies extends AppCompatActivity {
                     "5.Remove the pan from the steamer and let your turnip cake set for about 30 minutes. Once cooled, loosen the sides with a spatula and turn it out onto a cutting board." +
                     "";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("sushi"))
@@ -281,6 +371,12 @@ public class Recipies extends AppCompatActivity {
                     "6. Repeat this process with the salmon and various fillings, nori and rice.\n" +
                     "\n" ;
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("onigiri"))
@@ -309,6 +405,12 @@ public class Recipies extends AppCompatActivity {
                     "8. Sprinkle sesame seeds over the rice shapes.\n" +
                     "\n";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
         else if(text.equals("sashimi"))
         {
@@ -334,6 +436,12 @@ public class Recipies extends AppCompatActivity {
                     "6.Just prior to serving, heat the New Style Oil in a small frying pan until just before it begins to smoke.\n" +
                     "7. Pour it over fish slices and serve.";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("tempura"))
@@ -365,6 +473,12 @@ public class Recipies extends AppCompatActivity {
                     "6.Dip the sweet potatoes into the batter using tongs, drain for 2 to 3 seconds over the bowl, and then add to the hot oil. Adjust the heat to maintain between 375 and 400 degrees F. Fry 6 to 8 pieces, at a time, until puffy and very light golden, about 1 to 2 minutes\n" +
                     "7. Remove to a cooling rack lined with 3 layers of paper towels set over a half sheet pan. Sprinkle with salt, if desired.";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("spagetti"))
@@ -399,6 +513,12 @@ public class Recipies extends AppCompatActivity {
                     "\n" +
                     "Cook the spaghetti according to the package directions in generously salted water. Drain and mix into the spaghetti sauce. Serve with grated or ground Parmesan cheese and chopped fresh parsley if desired.";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("pizza"))
@@ -424,6 +544,12 @@ public class Recipies extends AppCompatActivity {
                     "3.Let the dough rise: Spread a thin layer of olive oil over the inside of a large bowl. Place the pizza dough in the bowl and turn it around so that it gets coated with the oil. At this point you can choose how long you want the dough to ferment and rise. A slow fermentation (24 hours in the fridge) will result in more complex flavors in the dough. A quick fermentation (1 1/2 hours in a warm place) will allow the dough to rise sufficiently to work with. Cover the dough with plastic wrap.\n" +
                     "Slide the pizza off of the peel and on to the baking stone in the oven.\n";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("risotto"))
@@ -447,6 +573,12 @@ public class Recipies extends AppCompatActivity {
                     "6.Warm 2 tablespoons olive oil in a large saucepan over medium-high heat. Stir in the mushrooms, and cook until soft, about 3 minutes. Remove mushrooms and their liquid, and set aside.\n" +
                     "7.Add 1 tablespoon olive oil to skillet, and stir in the shallots. Cook 1 minute. Add rice, stirring to coat with oil, about 2 minutes. When the rice has taken on a pale, golden color, pour in wine, stirring constantly until the wine is fully absorbed. Add 1/2 cup broth to the rice, and stir until the broth is absorbed. Continue adding broth 1/2 cup at a time, stirring continuously, until the liquid is absorbed and the rice is al dente, about 15 to 20 minutes";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("panna_cota"))
@@ -473,6 +605,12 @@ public class Recipies extends AppCompatActivity {
                     "\n" +
                     "5. Dip each ramekin three-quarters of the way in warm water and invert onto a plate. Garnish each panna cotta with strawberries and mint, if desired.";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("pad_thai"))
@@ -511,6 +649,12 @@ public class Recipies extends AppCompatActivity {
                     "6.Add noodles, sauce, bean sprouts and peanuts to the pan (reserving some peanuts for topping at the end). Toss everything to combine.\n" +
                     "7.Top with green onions, extra peanuts, cilantro and lime wedges. Serve immediately!";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("satay"))
@@ -540,6 +684,12 @@ public class Recipies extends AppCompatActivity {
                     "4.Thread marinated chicken onto skewers, then grill 4 to 5 minutes per side, or until cooked through. Serve with warm peanut sauce.\n" +
                     "\n";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
 
@@ -574,6 +724,12 @@ public class Recipies extends AppCompatActivity {
                     "9.Add the meatballs back to the skillet. Simmer them in the sauce until cooked through, about 7-10 minutes.\n" +
                     "10.Stir in the lime juice. Add salt and pepper to taste. Serve over hot, cooked ric";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
 
         else if(text.equals("larb"))
@@ -601,6 +757,36 @@ public class Recipies extends AppCompatActivity {
                     "3.Mix red onion, carrot, chestnuts, Thai chile peppers, green onions, mint, basil, and cilantro into turkey until well combined. Refrigerate mixture until chilled, about 30 minutes.\n" +
                     "4.Sprinkle rice powder and Thai chile flakes over turkey mixture and mix well.";
             tvRep.setText(rep);
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
         }
+
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Recipies.this,Cusines.class));
+            }
+        });
+    }
+    private void speak(String rep){
+        String text=rep;
+
+        float speed=0.75f;
+        TtS.setSpeechRate(speed);
+        TtS.speak(text,TextToSpeech.QUEUE_FLUSH,null);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(TtS!=null)
+        {
+            TtS.stop();
+            TtS.shutdown();
+        }
+        super.onDestroy();
     }
 }

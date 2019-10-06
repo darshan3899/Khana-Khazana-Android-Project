@@ -7,8 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Cusines extends AppCompatActivity {
-    Button btnIndian,btnItalian, btnJapanese , btnChinese,btnThai ,btnMexican ;
+    FirebaseAuth mFirebaseAuth;
+    Button btnIndian,btnItalian, btnJapanese , btnChinese,btnThai ,btnMexican ,btnLogout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +23,7 @@ public class Cusines extends AppCompatActivity {
         btnItalian = findViewById(R.id.btnItalian);
         btnMexican = findViewById(R.id.btnMexican);
         btnThai = findViewById(R.id.btnThai);
+        btnLogout=findViewById(R.id.btnLogout);
 
         btnIndian.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +59,14 @@ public class Cusines extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Cusines.this,ThaiRecipies.class));
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(Cusines.this,MainActivity.class));
             }
         });
     }
