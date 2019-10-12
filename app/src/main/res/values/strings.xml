@@ -27,4 +27,8 @@
     <string name="pav_bhaji">PAV BHAJI</string>
     <string name="biryani">BIRYANI</string>
     <string name="panna_cotta">PANNA COTTA</string>
+    <string name="textview">TextView</string>
+    <string name="comment">COMMENT</string>
+    <string name="email_verified">Email is Verified!!</string>
+    <string name="email_not_verified">Email is Not Verified(Click to Verify)</string>
 </resources>

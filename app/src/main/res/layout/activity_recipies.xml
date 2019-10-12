@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:gravity="center_horizontal"
-                android:text="TextView"
+                android:text="@string/textview"
                 android:textSize="36sp"
                 android:textStyle="bold|italic" />
 
@@ -41,14 +41,15 @@
                 android:layout_height="50dp"
                 android:layout_gravity="center_horizontal"
                 android:clickable="true"
-                app:srcCompat="@drawable/audio" />
+                app:srcCompat="@drawable/audio"
+                android:focusable="true" />
 
             <TextView
                 android:id="@+id/tvRep"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
-                android:text="TextView"
+                android:text="@string/textview"
                 android:textSize="19sp" />
 
             <LinearLayout
@@ -63,7 +64,7 @@
                     android:layout_margin="15dp"
                     android:layout_weight="1"
                     android:ems="10"
-                    android:hint="COMMENT"
+                    android:hint="@string/comment"
                     android:inputType="textPersonName"
                     android:padding="15dp" />
 

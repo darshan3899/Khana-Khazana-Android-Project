@@ -1,10 +1,12 @@
 package com.example.khanakhazana;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,10 +27,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
+    ProgressBar pbBar;
     ImageView ivLogo;
     EditText etEmail,etPassword;
     Button btnLogin;
-    TextView tvSignUp;
+    TextView tvSignUp,tvForgot;
     FirebaseAuth mFirebaseAuth;
     FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
     private FirebaseAuth.AuthStateListener mAuthStateListener;
@@ -38,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         mFirebaseAuth=FirebaseAuth.getInstance();
 
+        pbBar=findViewById(R.id.pbBar);
+        tvForgot=findViewById(R.id.tvForgot);
         ivLogo=findViewById(R.id.ivLogo);
         etEmail=findViewById(R.id.etEmail);
         etPassword=findViewById(R.id.etPassword);
@@ -52,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         mAuthStateListener=new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
+                FirebaseUser mFirebaseUser = mFirebaseAuth.getInstance().getCurrentUser();
                 if(mFirebaseUser!=null)
                 {
                     Toast.makeText(MainActivity.this,"You're Logged In",Toast.LENGTH_SHORT);
@@ -69,12 +76,20 @@ public class MainActivity extends AppCompatActivity {
                 String email=etEmail.getText().toString().trim();
                 String password=etPassword.getText().toString().trim();
 
+                //check email
+                if(!Patterns.EMAIL_ADDRESS.matcher(email).matches())
+                {
+                    etEmail.setError("Please Enter Valid Email!");
+                    etEmail.requestFocus();
+                }
+
                 //check if email and password are empty
                 if(email.isEmpty())
                 {
                     etEmail.setError("Please Enter Email!");
                     etEmail.requestFocus();
                 }
+
                 else if(password.isEmpty())
                 {
                     etPassword.setError("Please Enter Password!");
@@ -83,11 +98,14 @@ public class MainActivity extends AppCompatActivity {
                 //if all values are inserted
                 else if(!(email.isEmpty()&&password.isEmpty()))
                 {
+                    pbBar.setVisibility(View.VISIBLE);
                     mFirebaseAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
+                            pbBar.setVisibility(View.GONE);
                             if(!task.isSuccessful())
                             {
+                                finish();
                                 Toast.makeText(MainActivity.this,"ERROR",Toast.LENGTH_SHORT);
                             }
                             else
@@ -99,6 +117,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+       tvForgot.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,ForgotPassword.class));
+           }
+       });
 
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override

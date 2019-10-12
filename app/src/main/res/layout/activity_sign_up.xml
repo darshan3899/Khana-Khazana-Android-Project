@@ -10,94 +10,113 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/ivLogo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center_horizontal"
-        app:srcCompat="@drawable/logo" />
-
-    <EditText
-        android:id="@+id/etName"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:hint="@string/enter_name"
-        android:inputType="textPersonName"
-        android:textColor="#000000"
-        android:textColorHighlight="@color/colorPrimary"
-        android:textColorHint="@color/colorPrimary" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/etPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:hint="@string/enter_phone_number"
-        android:inputType="phone"
-        android:textColor="#000000"
-        android:textColorHighlight="@color/colorPrimary"
-        android:textColorHint="@color/colorPrimary" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/etEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:hint="@string/enter_email"
-        android:inputType="textEmailAddress"
-        android:textColor="#000000"
-        android:textColorHighlight="@color/colorPrimary"
-        android:textColorHint="@color/colorPrimary" />
+            <ImageView
+                android:id="@+id/ivLogo"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                app:srcCompat="@drawable/logo" />
 
-    <EditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:hint="@string/enter_password"
-        android:inputType="textPassword"
-        android:textColor="#000000"
-        android:textColorHighlight="@color/colorPrimary"
-        android:textColorHint="@color/colorPrimary" />
+            <EditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:hint="@string/enter_name"
+                android:inputType="textPersonName"
+                android:textColor="#000000"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
 
-    <EditText
-        android:id="@+id/etConfirmPass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:ems="10"
-        android:gravity="center_horizontal"
-        android:hint="@string/enter_password"
-        android:inputType="textPassword"
-        android:textColor="#000000"
-        android:textColorHighlight="@color/colorPrimary"
-        android:textColorHint="@color/colorPrimary" />
+            <EditText
+                android:id="@+id/etPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:hint="@string/enter_phone_number"
+                android:inputType="phone"
+                android:textColor="#000000"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
 
-    <Button
-        android:id="@+id/btnSignUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        android:background="@drawable/round_btn"
-        android:text="@string/sign_up"
-        android:textColor="@color/white" />
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:hint="@string/enter_email"
+                android:inputType="textEmailAddress"
+                android:textColor="#000000"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/border"
-        android:orientation="vertical"></LinearLayout>
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:hint="@string/enter_password"
+                android:inputType="textPassword"
+                android:textColor="#000000"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
+
+            <EditText
+                android:id="@+id/etConfirmPass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:ems="10"
+                android:gravity="center_horizontal"
+                android:hint="@string/enter_password"
+                android:inputType="textPassword"
+                android:textColor="#000000"
+                android:textColorHighlight="@color/colorPrimary"
+                android:textColorHint="@color/colorPrimary" />
+
+            <ProgressBar
+                android:id="@+id/pbBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/btnSignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/round_btn"
+                android:text="@string/sign_up"
+                android:textColor="@color/white" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/border"
+                android:orientation="vertical"></LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

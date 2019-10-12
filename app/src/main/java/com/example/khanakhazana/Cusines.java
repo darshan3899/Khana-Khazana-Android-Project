@@ -66,10 +66,11 @@ public class Cusines extends AppCompatActivity {
         });
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater=getMenuInflater();
-        inflater.inflate(R.menu.main,menu);
+        inflater.inflate(R.menu.menu_log,menu);
         return true;
     }
 
@@ -77,7 +78,7 @@ public class Cusines extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId())
         {
-            case R.id.menu_logout:
+            case R.id.item1:
                 mFirebaseAuth.getInstance().signOut();
                 startActivity(new Intent(Cusines.this,MainActivity.class));
                 return true;

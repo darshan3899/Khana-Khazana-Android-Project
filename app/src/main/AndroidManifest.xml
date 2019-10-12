@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.khanakhazana">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/logo"
@@ -9,35 +12,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ThaiRecipies"
-            android:parentActivityName=".Cusines">
-        </activity>
-
-        <activity android:name=".ItalianRecipies"
-            android:parentActivityName=".Cusines"/>
-
-        <activity android:name=".JapaneseRecipies"
-            android:parentActivityName=".Cusines"/>
-
-        <activity android:name=".ChineseRecipies"
-            android:parentActivityName=".Cusines"/>
-
+        <activity android:name=".ForgotPassword"></activity>
+        <activity
+            android:name=".ThaiRecipies"
+            android:parentActivityName=".Cusines" />
+        <activity
+            android:name=".ItalianRecipies"
+            android:parentActivityName=".Cusines" />
+        <activity
+            android:name=".JapaneseRecipies"
+            android:parentActivityName=".Cusines" />
+        <activity
+            android:name=".ChineseRecipies"
+            android:parentActivityName=".Cusines" />
         <activity
             android:name=".Recipies"
             android:parentActivityName=".IndianRecipes" />
-
         <activity
             android:name=".IndianRecipes"
             android:parentActivityName=".Cusines" />
-
-        <activity android:name=".Cusines"
-            android:parentActivityName=".Introduction"/>
-
-        <activity android:name=".Introduction"
-            android:parentActivityName=".MainActivity"/>
-
+        <activity
+            android:name=".Cusines"
+            android:parentActivityName=".Introduction" />
+        <activity
+            android:name=".Introduction"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".SignUp" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
