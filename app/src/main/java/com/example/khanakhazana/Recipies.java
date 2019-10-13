@@ -19,11 +19,14 @@ import java.util.Locale;
 
 public class Recipies extends AppCompatActivity {
 
+
+    DatabaseReference mDatabase;
     TextToSpeech TtS;
     ImageView ivImg,ivAudio;
     Button btnSubmit;
     TextView tvName,tvRep;
     String rep;
+
     int noOfStars;
     RatingBar rbRating;
     @Override
@@ -37,6 +40,8 @@ public class Recipies extends AppCompatActivity {
         tvRep=findViewById(R.id.tvRep);
         rbRating=findViewById(R.id.rbRating);
         ivAudio=findViewById(R.id.ivAudio);
+
+        mDatabase=FirebaseDatabase.getInstance().getReference();
 
 
         Intent intent=getIntent();
@@ -66,6 +71,7 @@ public class Recipies extends AppCompatActivity {
 
         if(text.equals("khandvi"))
         {
+
             tvName.setText("KHANDVI");
             ivImg.setImageResource(R.drawable.indian_khandvi);
             rep=
@@ -92,6 +98,9 @@ public class Recipies extends AppCompatActivity {
                     "5.When cool, cut into strips two inches wide and roll them tightly. Heat two tablespoons of oil and add a pinch of asafoetida and mustard seeds\n" +
                     "6.When they splutter, pour over the pieces. Serve garnished with scraped";
             tvRep.setText(rep);
+            noOfStars=rbRating.getNumStars();
+
+
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

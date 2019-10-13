@@ -31,4 +31,27 @@
     <string name="comment">COMMENT</string>
     <string name="email_verified">Email is Verified!!</string>
     <string name="email_not_verified">Email is Not Verified(Click to Verify)</string>
+    <string name="khandvi_recipie"> "INGREDIENTS\n" +
+                    "1.Gram flour 1 1/4 cups\n" +
+                    "2.Yogurt 1 cup\n" +
+                    "3.Ginger 1 inch\n" +
+                    "4.Green chillies 2\n" +
+                    "5.Oil 4 tablespoons\n" +
+                    "6.Salt to taste\n" +
+                    "7.Turmeric powder 1/2 teaspoon\n" +
+                    "8.Lemon juice 1 tablespoon\n" +
+                    "9.Asafoetida a pinch\n" +
+                    "10.Mustard seeds 1 teaspoon\n" +
+                    "11.Coconut scraped 2 teaspoons\n" +
+                    "12.Fresh coriander leaves chopped a few sprigs\n" +
+                    "\n" +
+                    "\n" +
+                    "METHOD\n" +
+                    "1.Sieve besan and keep in a bowl. Grind ginger and green chillies. Grease the reverse side of a few thalis or marble table top with a little oil. Make buttermilk with yogurt and half a cup of water.\n" +
+                    "2.Mix the besan with ginger-green chilli paste, salt, turmeric powder, lemon juice and buttermilk, taking care that no lumps remain\n" +
+                    "3.Cook this mixture, stirring continuously, in a thick bottomed pan till it becomes a smooth thick batter. It takes a little time to get ready.\n" +
+                    "4.Quickly spread portions of the mixture over the greased inverted thalis or marble table top as thinly as possible while the batter is still hot.\n" +
+                    "5.When cool, cut into strips two inches wide and roll them tightly. Heat two tablespoons of oil and add a pinch of asafoetida and mustard seeds\n" +
+                    "6.When they splutter, pour over the pieces. Serve garnished with scraped"</string>
+    <string name="forgot_password">Forgot Password?</string>
 </resources>
