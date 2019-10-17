@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MexicanRecipies"></activity>
+        <activity android:name=".MexicanRecipies" />
         <activity android:name=".ForgotPassword" />
         <activity
             android:name=".ThaiRecipies"
@@ -35,9 +35,7 @@
         <activity
             android:name=".Cusines"
             android:parentActivityName=".Introduction" />
-        <activity
-            android:name=".Introduction"
-             />
+        <activity android:name=".Introduction" />
         <activity android:name=".SignUp" />
         <activity android:name=".MainActivity">
             <intent-filter>
