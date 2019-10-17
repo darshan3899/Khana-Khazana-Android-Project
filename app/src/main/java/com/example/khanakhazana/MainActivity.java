@@ -128,8 +128,7 @@ public class MainActivity extends AppCompatActivity {
         tvSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent signup=new Intent(MainActivity.this,SignUp.class);
-                startActivity(signup);
+                startActivity(new Intent(MainActivity.this,SignUp.class));
             }
         });
     }

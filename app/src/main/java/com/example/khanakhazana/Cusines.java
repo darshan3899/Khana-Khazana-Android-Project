@@ -64,7 +64,12 @@ public class Cusines extends AppCompatActivity {
                 startActivity(new Intent(Cusines.this,ThaiRecipies.class));
             }
         });
-
+        btnMexican.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Cusines.this,MexicanRecipies.class));
+            }
+        });
     }
 
     @Override

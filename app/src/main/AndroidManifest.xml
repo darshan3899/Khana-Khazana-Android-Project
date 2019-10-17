@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ForgotPassword"></activity>
+        <activity android:name=".MexicanRecipies"></activity>
+        <activity android:name=".ForgotPassword" />
         <activity
             android:name=".ThaiRecipies"
             android:parentActivityName=".Cusines" />
@@ -36,7 +37,7 @@
             android:parentActivityName=".Introduction" />
         <activity
             android:name=".Introduction"
-            android:parentActivityName=".MainActivity" />
+             />
         <activity android:name=".SignUp" />
         <activity android:name=".MainActivity">
             <intent-filter>

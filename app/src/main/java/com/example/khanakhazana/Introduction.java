@@ -14,6 +14,7 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Introduction extends AppCompatActivity {
+    public static final String EXTRA_TEXT="com.example.khanakhazana.EXTRA_TEXT";
     Button btnOur,btnSpecial;
     FirebaseAuth mFirebaseAuth;
     @Override
@@ -29,6 +30,16 @@ public class Introduction extends AppCompatActivity {
             public void onClick(View view) {
                 Intent cusine = new Intent(Introduction.this,Cusines.class);
                 startActivity(cusine);
+            }
+        });
+
+        btnSpecial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               String name="gulab_jamun";
+                Intent intent=new Intent(Introduction.this,Recipies.class);
+                intent.putExtra(EXTRA_TEXT,name);
+                startActivity(intent);
             }
         });
     }

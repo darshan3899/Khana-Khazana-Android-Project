@@ -25,24 +25,31 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+
+
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.Map;
+import java.util.UUID;
 
 public class SignUp extends AppCompatActivity {
 
     //private final int CHOOSE_IMAGE=101;
-    //FirebaseStorage storage=FirebaseStorage.getInstance();
-    //StorageReference profileReference=storage.getReference("image/*");
-    //String profileURL;
-    //Uri uriProfile;
+    FirebaseAuth mFirebaseAuth;
+    StorageReference mStorageReference;
+    Uri uriProfile=null;
+    //FirebaseFirestore mFirebaseFirestore;
+
+    ImageView ivProfile;
     EditText etName,etPhone,etPassword,etConfirmPass,etEmail;
     Button btnSignUp;
-    FirebaseAuth mFirebaseAuth;
+
     ProgressBar pbBar;
-    //ImageView ivProfile;
+
     //FirebaseUser user;
 
     @Override
@@ -51,21 +58,24 @@ public class SignUp extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         mFirebaseAuth=FirebaseAuth.getInstance();
+        mStorageReference=FirebaseStorage.getInstance().getReference();
+        //mFirebaseFirestore=FirebaseFirestore.getInstance();
 
         pbBar=findViewById(R.id.pbBar);
         etName=findViewById(R.id.etName);
+
         etPhone=findViewById(R.id.etPhone);
         etPassword=findViewById(R.id.etPassword);
         etConfirmPass=findViewById(R.id.etConfirmPass);
         btnSignUp=findViewById(R.id.btnSignUp);
         etEmail=findViewById(R.id.etEmail);
-/*
-        ivProfile.setOnClickListener(new View.OnClickListener() {
+
+      /*  ivProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showImageChooser();
+                //showImageChooser();
                 uploadImageToFirebase();
-                saveImage();
+                // saveImage();
             }
         });*/
 
@@ -171,8 +181,10 @@ public class SignUp extends AppCompatActivity {
 
     }
 
-/*    private void saveImage() {
+   /* private void saveImage() {
+
         FirebaseUser user=mFirebaseAuth.getCurrentUser();
+
         if(user!=null)
         {
             UserProfileChangeRequest profile=new UserProfileChangeRequest.Builder().setPhotoUri(Uri.parse(profileURL)).build();
@@ -186,18 +198,38 @@ public class SignUp extends AppCompatActivity {
                 }
             });
         }
-    }
+    }*/
 
-    private void uploadImageToFirebase() {
-
+   /* private void uploadImageToFirebase() {
+        Intent intent=new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent,"Select Profile Image"),CHOOSE_IMAGE);
+        String randomName = UUID.randomUUID().toString();
+        final StorageReference filePath=mStorageReference.child("profileImage").child(randomName+".jpg");
         if(uriProfile!=null)
-            profileReference.putFile(uriProfile)
-                                            .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                                                @Override
-                                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                                                    profileURL=taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-                                                }
-                                            });
+           filePath.putFile(uriProfile).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+               @Override
+               public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    if(task.isSuccessful())
+                    {
+                        File newFile=new File(uriProfile.getPath());
+                        filePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                String download_Uri=uri.toString();
+                                mFirebaseFirestore.collection("profile_image").add(uriProfile).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                                        if (task.isSuccessful())
+                                            Toast.makeText(SignUp.this,"Done",Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                        });
+                    }
+               }
+           });
     }
 
     @Override
@@ -215,7 +247,7 @@ public class SignUp extends AppCompatActivity {
         }
     }
 
-    private void showImageChooser()
+    /*private void showImageChooser()
     {
         Intent intent=new Intent();
         intent.setType("image/*");

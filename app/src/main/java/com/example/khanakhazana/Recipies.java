@@ -1,8 +1,11 @@
 package com.example.khanakhazana;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
@@ -12,22 +15,29 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Locale;
 
 public class Recipies extends AppCompatActivity {
 
 
-    DatabaseReference mDatabase;
+    FirebaseAuth mFirebaseAuth;
+    FirebaseAuth.AuthStateListener mAuthStateListener;
+    FirebaseDatabase mDatabase;
+    DatabaseReference mRef;
     TextToSpeech TtS;
     ImageView ivImg,ivAudio;
     Button btnSubmit;
-    TextView tvName,tvRep;
+    TextView tvName,tvRep,etComment,tvlink;
     String rep;
-
-    int noOfStars;
+    float rating;
     RatingBar rbRating;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +50,13 @@ public class Recipies extends AppCompatActivity {
         tvRep=findViewById(R.id.tvRep);
         rbRating=findViewById(R.id.rbRating);
         ivAudio=findViewById(R.id.ivAudio);
+        etComment=findViewById(R.id.etComment);
+        tvlink=findViewById(R.id.tvlink);
+        tvlink.setPaintFlags(tvlink.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        mDatabase=FirebaseDatabase.getInstance().getReference();
+        mFirebaseAuth=FirebaseAuth.getInstance();
+        mDatabase=FirebaseDatabase.getInstance();
+        mRef=mDatabase.getReference();
 
 
         Intent intent=getIntent();
@@ -98,13 +113,12 @@ public class Recipies extends AppCompatActivity {
                     "5.When cool, cut into strips two inches wide and roll them tightly. Heat two tablespoons of oil and add a pinch of asafoetida and mustard seeds\n" +
                     "6.When they splutter, pour over the pieces. Serve garnished with scraped";
             tvRep.setText(rep);
-            noOfStars=rbRating.getNumStars();
 
-
-            ivAudio.setOnClickListener(new View.OnClickListener() {
+            tvlink.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    speak(rep);
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=dtvRMihki6g"));
+                    startActivity(intent);
                 }
             });
         }
@@ -128,6 +142,13 @@ public class Recipies extends AppCompatActivity {
                     "3.Fill a large heavy skillet halfway with oil. Heat over medium heat for at least 5 minutes. Knead the dough, and form into about 20 small balls. Reduce the heat of the oil to low, and fry the balls in one or two batches. After about 5 minutes, they will start to float, and expand to twice their original size, but the color will not change much. After the jamun float, increase the heat to medium, and turn them frequently until light golden. Remove from the oil to paper towels using a slotted spoon, and allow to cool. Drain on paper towels and allow to cool slightly.\n" +
                     "4.Place the balls into the skillet with the syrup. Simmer over medium heat for about 5 minutes, squeezing them gently to soak up the syrup. Serve immediately, or chill.";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=HVMpZNHQV9c"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -164,6 +185,13 @@ public class Recipies extends AppCompatActivity {
                     "3.Mash the vegetables till they are little pulpy.\n" +
                     "4.Add lemon juice and serve with toasted buns or Pav.";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=sAnPUIvPc1I"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -207,6 +235,13 @@ public class Recipies extends AppCompatActivity {
                     "10.Reduce flame and cook for 40 min.\n" +
                     "11.Finally, add lime juice mixed with turmeric powder through small holes made in the rice.\n";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=XTM0wwIGXfY"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -246,6 +281,13 @@ public class Recipies extends AppCompatActivity {
                     "4.In the meantime, making the filling. Place the cellophane noodles in a heatproof bowl and add enough boiling water to submerge the noodles completely. Drain the noodles after two minutes, they should be soft but not mushy. Once cooled, roughly cut the noodles into 1 inch segments." +
                     "";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=qvOBLYVWPYY"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -281,6 +323,13 @@ public class Recipies extends AppCompatActivity {
                     "4.Stir in the vinegar and cook for one minute, stirring continuously.\n" +
                     "5.Garnish with remaining spring onion greens and serve hot.";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=bXgxzzNm0U8"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -316,6 +365,13 @@ public class Recipies extends AppCompatActivity {
                     "8.Dry on kitchen paper.\n" +
                     "9.If desired serve the spring rolls with soy sauce.";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=DIjrTDDQOnM"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -349,6 +405,13 @@ public class Recipies extends AppCompatActivity {
                     "5.Remove the pan from the steamer and let your turnip cake set for about 30 minutes. Once cooled, loosen the sides with a spatula and turn it out onto a cutting board." +
                     "";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=c8JfP38e97s"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -380,6 +443,13 @@ public class Recipies extends AppCompatActivity {
                     "6. Repeat this process with the salmon and various fillings, nori and rice.\n" +
                     "\n" ;
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=CgSiJeltN0U"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -414,6 +484,13 @@ public class Recipies extends AppCompatActivity {
                     "8. Sprinkle sesame seeds over the rice shapes.\n" +
                     "\n";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=zGH82EWJ-nU"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -445,6 +522,13 @@ public class Recipies extends AppCompatActivity {
                     "6.Just prior to serving, heat the New Style Oil in a small frying pan until just before it begins to smoke.\n" +
                     "7. Pour it over fish slices and serve.";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=TgoN7bsTFmU"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -482,6 +566,13 @@ public class Recipies extends AppCompatActivity {
                     "6.Dip the sweet potatoes into the batter using tongs, drain for 2 to 3 seconds over the bowl, and then add to the hot oil. Adjust the heat to maintain between 375 and 400 degrees F. Fry 6 to 8 pieces, at a time, until puffy and very light golden, about 1 to 2 minutes\n" +
                     "7. Remove to a cooling rack lined with 3 layers of paper towels set over a half sheet pan. Sprinkle with salt, if desired.";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=k5DXVAa3eWY"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -522,6 +613,13 @@ public class Recipies extends AppCompatActivity {
                     "\n" +
                     "Cook the spaghetti according to the package directions in generously salted water. Drain and mix into the spaghetti sauce. Serve with grated or ground Parmesan cheese and chopped fresh parsley if desired.";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=ErEy38dcCVg"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -553,6 +651,13 @@ public class Recipies extends AppCompatActivity {
                     "3.Let the dough rise: Spread a thin layer of olive oil over the inside of a large bowl. Place the pizza dough in the bowl and turn it around so that it gets coated with the oil. At this point you can choose how long you want the dough to ferment and rise. A slow fermentation (24 hours in the fridge) will result in more complex flavors in the dough. A quick fermentation (1 1/2 hours in a warm place) will allow the dough to rise sufficiently to work with. Cover the dough with plastic wrap.\n" +
                     "Slide the pizza off of the peel and on to the baking stone in the oven.\n";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=sv3TXMSv6Lw"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -582,6 +687,13 @@ public class Recipies extends AppCompatActivity {
                     "6.Warm 2 tablespoons olive oil in a large saucepan over medium-high heat. Stir in the mushrooms, and cook until soft, about 3 minutes. Remove mushrooms and their liquid, and set aside.\n" +
                     "7.Add 1 tablespoon olive oil to skillet, and stir in the shallots. Cook 1 minute. Add rice, stirring to coat with oil, about 2 minutes. When the rice has taken on a pale, golden color, pour in wine, stirring constantly until the wine is fully absorbed. Add 1/2 cup broth to the rice, and stir until the broth is absorbed. Continue adding broth 1/2 cup at a time, stirring continuously, until the liquid is absorbed and the rice is al dente, about 15 to 20 minutes";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=NKtR3KpS83w"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -614,6 +726,13 @@ public class Recipies extends AppCompatActivity {
                     "\n" +
                     "5. Dip each ramekin three-quarters of the way in warm water and invert onto a plate. Garnish each panna cotta with strawberries and mint, if desired.";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=qNCamYIFllk"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -658,6 +777,13 @@ public class Recipies extends AppCompatActivity {
                     "6.Add noodles, sauce, bean sprouts and peanuts to the pan (reserving some peanuts for topping at the end). Toss everything to combine.\n" +
                     "7.Top with green onions, extra peanuts, cilantro and lime wedges. Serve immediately!";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=F5-nfxQjfZU"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -693,6 +819,13 @@ public class Recipies extends AppCompatActivity {
                     "4.Thread marinated chicken onto skewers, then grill 4 to 5 minutes per side, or until cooked through. Serve with warm peanut sauce.\n" +
                     "\n";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=aBAtC_Zp1Qo"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -733,6 +866,13 @@ public class Recipies extends AppCompatActivity {
                     "9.Add the meatballs back to the skillet. Simmer them in the sauce until cooked through, about 7-10 minutes.\n" +
                     "10.Stir in the lime juice. Add salt and pepper to taste. Serve over hot, cooked ric";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=_t4bdNeTDvk"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -766,6 +906,13 @@ public class Recipies extends AppCompatActivity {
                     "3.Mix red onion, carrot, chestnuts, Thai chile peppers, green onions, mint, basil, and cilantro into turkey until well combined. Refrigerate mixture until chilled, about 30 minutes.\n" +
                     "4.Sprinkle rice powder and Thai chile flakes over turkey mixture and mix well.";
             tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=elcphgkyYLY"));
+                    startActivity(intent);
+                }
+            });
             ivAudio.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -774,6 +921,150 @@ public class Recipies extends AppCompatActivity {
             });
         }
 
+        else if(text.equals("nacho"))
+        {
+            tvName.setText("NACHOS");
+            ivImg.setImageResource(R.drawable.mexican_nacho);
+            rep="INGREDIENTS\n" +
+                    "1. 1 bag white corn chips\n" +
+                    "2. 3 cups freshly grated Monterey Jack cheese\n" +
+                    "3. 1 jar jalapeno slices, optional\n" +
+                    "\n" +
+                    "\n" +
+                    "METHOD\n" +
+                    "1. Preheat the oven to 350 degrees F.\n" +
+                    "1.Cook and stir ground beef in a skillet over medium heat until meat is crumbly and no longer pink, 5 to 10 minutes. Drain excess grease. Stir in taco seasoning mix and water and simmer until beef mixture has thickened, 8 to 10 minutes.\n" +
+                    "2.Set the oven rack about 6 inches from the heat source and preheat the broiler. Line a baking sheet with aluminum foil. Spread tortilla chips on the prepared baking sheet; top with Cheddar cheese and dot with refried beans and ground beef mixture.\n" +
+                    "3.Broil in the preheated oven until cheese is melted, watching carefully to prevent burning, 3 to 5 minutes. Top nachos with salsa, sour cream, black olives, green onions, and jalapeno peppers.";
+            tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=29FKpBO7T2M"));
+                    startActivity(intent);
+                }
+            });
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
+        }
+        else if(text.equals("tacos"))
+        {
+            tvName.setText("TACOS");
+            ivImg.setImageResource(R.drawable.mexican_taco);
+            rep="INGREDIENTS\n" +
+                    "1. 12 ounces firm tofu, drained and cut into 8 slices\n" +
+                    "2. 4 cups shredded coleslaw mix\n" +
+                    "3. 1 small bunch radishes, thinly sliced\n" +
+                    "4. 1/2 cup chopped fresh cilantro\n" +
+                    "5. 1 bunch scallions, sliced\n" +
+                    "6. 1 1/2 tablespoons extra-virgin olive oil\n" +
+                    "7. 2 limes (1 zested and juiced, 1 cut into wedges)\n" +
+                    "8. 1/4 cup nonfat plain Greek yogurt\n" +
+                    "9. Kosher salt and freshly ground pepper\n" +
+                    "10. 1 tablespoon taco seasoning\n" +
+                    "11. 8 8-inch whole-wheat tortillas\n" +
+                    "12. 1/4 cup shredded part-skim mozzarella or pepper jack cheese\n" +
+                    "13. 1/4 cup jarred salsa verde\n" +
+                    "\n" +
+                    "\n" +
+                    "METHOD\n" +
+                    "1. Lay the tofu slices flat on a stack of paper towels; top with more paper towels, then put a heavy skillet on top to press out the excess water, about 10 minutes. Meanwhile, toss the coleslaw, radishes, cilantro, scallions, 1 tablespoon olive oil, the lime zest and half of the lime juice in a large bowl.\n" +
+                    "2. Mix the yogurt with the remaining lime juice in a small bowl and season with salt and pepper.\n" +
+                    "3. Brush the tofu on all sides with the remaining 1/2 tablespoon olive oil and sprinkle with the taco seasoning. Heat a nonstick skillet over medium-high heat, then add the tofu and cook until it begins to crisp, about 5 minutes; flip and cook 2 more minutes. Cut into strips.\n" +
+                    "4. Toast the tortillas in a dry skillet, 1 minute per side, or wrap in a damp towel and microwave 1 minute. Fill with the tofu, cheese and slaw, then drizzle with the yogurt sauce and salsa. Serve with the lime wedges";
+                        tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=5yWOLxiniYo"));
+                    startActivity(intent);
+                }
+            });
+                        ivAudio.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                speak(rep);
+                            }
+                        });
+            }
+        else if(text.equals("enchiladas"))
+        {
+            tvName.setText("ENCHILADAS");
+            ivImg.setImageResource(R.drawable.mexican_chicken_mole);
+            rep="INGREDIENTS\n" +
+                    "1. 12 ounces firm tofu, drained and cut into 8 slices\n" +
+                    "2. 4 cups shredded coleslaw mix\n" +
+                    "3. 1 small bunch radishes, thinly sliced\n" +
+                    "4. 1/2 cup chopped fresh cilantro\n" +
+                    "5. 1 bunch scallions, sliced\n" +
+                    "6. 1 1/2 tablespoons extra-virgin olive oil\n" +
+                    "7. 2 limes (1 zested and juiced, 1 cut into wedges)\n" +
+                    "8. 1/4 cup nonfat plain Greek yogurt\n" +
+                    "9. Kosher salt and freshly ground pepper\n" +
+                    "10. 1 tablespoon taco seasoning\n" +
+                    "11. 8 8-inch whole-wheat tortillas\n" +
+                    "12. 1/4 cup shredded part-skim mozzarella or pepper jack cheese\n" +
+                    "13. 1/4 cup jarred salsa verde\n" +
+                    "\n" +
+                    "\n" +
+                    "METHOD\n" +
+                    "1. Lay the tofu slices flat on a stack of paper towels; top with more paper towels, then put a heavy skillet on top to press out the excess water, about 10 minutes. Meanwhile, toss the coleslaw, radishes, cilantro, scallions, 1 tablespoon olive oil, the lime zest and half of the lime juice in a large bowl.\n" +
+                    "2. Mix the yogurt with the remaining lime juice in a small bowl and season with salt and pepper.\n" +
+                    "3. Brush the tofu on all sides with the remaining 1/2 tablespoon olive oil and sprinkle with the taco seasoning. Heat a nonstick skillet over medium-high heat, then add the tofu and cook until it begins to crisp, about 5 minutes; flip and cook 2 more minutes. Cut into strips.\n" +
+                    "4. Toast the tortillas in a dry skillet, 1 minute per side, or wrap in a damp towel and microwave 1 minute. Fill with the tofu, cheese and slaw, then drizzle with the yogurt sauce and salsa. Serve with the lime wedges";
+            tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=JV_NZQTjrjM"));
+                    startActivity(intent);
+                }
+            });
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
+        }
+        else if(text.equals("salsa"))
+        {
+            tvName.setText("SALSA VERDE");
+            ivImg.setImageResource(R.drawable.salsa_verde);
+            rep="INGREDIENTS\n" +
+                    "1 ½ pounds tomatillos (about 12 medium), husked and rinsed\n" +
+                    "1 to 2 medium jalapeños, stemmed (omit for mild salsa, use 1 jalapeño for medium salsa and 2 jalapeños for hot salsa, note that spiciness will depend on heat of actual peppers used)\n" +
+                    "½ cup chopped white onion (about ½ medium onion)\n" +
+                    "¼ cup packed fresh cilantro leaves (more if you love cilantro)\n" +
+                    "2 tablespoons to ¼ cup lime juice (1 to 2 medium limes, juiced), to taste\n" +
+                    "½ to 1 teaspoon salt, to taste\n" +
+                    "Optional variation: 1 to 2 diced avocados, for creamy avocado salsa verde\n" +
+                    "METHOD\n" +
+                    "Preheat the broiler with a rack about 4 inches below the heat source. Place the tomatillos and jalapeño(s) on a rimmed baking sheet and broil until they’re blackened in spots, about 5 minutes.\n" +
+                    "Remove the baking sheet from the oven, carefully flip over the tomatillos and pepper(s) with tongs and broil for 4 to 6 more minutes, until the tomatillos are splotchy-black and blistered.\n" +
+                    "Meanwhile, in a food processor or blender, combine the chopped onion, cilantro, 2 tablespoons lime juice and ½ teaspoon salt. Once the tomatillos are out of the oven, carefully transfer the hot tomatillos, pepper(s) and all of their juices into the food processor or blender.\n" +
+                    "Pulse until the mixture is mostly smooth and no big chunks of tomatillo remain, scraping down the sides as necessary. Season to taste with additional lime juice and salt, if desired.\n" +
+                    "The salsa will be thinner at first, but will thicken up after a few hours in the refrigerator, due to the naturally occurring pectin in the tomatillos. If you’d like to make creamy avocado salsa verde, let the salsa cool down before blending in 1 to 2 diced avocados (the more avocado, the creamier it gets).\n";
+            tvRep.setText(rep);
+            tvlink.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.youtube.com/watch?v=XHERKypDy-A"));
+                    startActivity(intent);
+                }
+            });
+            ivAudio.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    speak(rep);
+                }
+            });
+        }
+        
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
